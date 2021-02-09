@@ -155,93 +155,92 @@ def NewOrder():
     orders.append(order)
     return orders
 
-    
-# --- reads in from the 3 csv files ---
-orders = FromCSV("orders", orders)
-products = FromCSV("products", products)
-couriers = FromCSV("couriers", couriers)
-# ---
-while True:
-    Clear()
-    option = MenuStart(MainMenu()) # starts the function by calling the first menu
-# --------- Product Menu ------------
-    if option == "1":
-        while True:
-            Clear()
-            option = MenuStart(ProductMenu())
-            if option == "1": #Product List
-                Clear()
-                PrintList(products)
-                Return()
-            elif option == "2": #Add a Product
-                Clear()
-                NewProduct()
-                Return()
-            elif option == "3": #Remove a product
-                Clear()
-                RemoveProduct()
-                Return()
-            elif option == "6": #Return to Main Menu
-                break    
-            elif option == "exit": #Exit
-                Goodbye()
-            else:
-                print("Try again:")
-                input("Please enter a valid option: ")
+if __name__ == "__main__": # only runs if app.py is ran directly
+    # --- reads in from the 3 csv files ---
+    orders = FromCSV("orders", orders)
+    products = FromCSV("products", products)
+    couriers = FromCSV("couriers", couriers)
+    while True:
+        Clear()
+        option = MenuStart(MainMenu()) # starts the function by calling the first menu
+    # --------- Product Menu ------------
+        if option == "1":
+            while True:
                 Clear()
                 option = MenuStart(ProductMenu())
-# -------- Courier Menu ---------
-    elif option == "2": #Courier Menu
-        while True:
-            Clear()
-            option = MenuStart(CourierMenu())
-            if option == "1": #Courier List
-                Clear()
-                PrintList(couriers)
-                Return()
-            elif option == "6": #Main Menu
-                break
-            elif option == "exit": #Exit
-                Goodbye()
-                exit()
-            else:
-                print("Try again")
-                input("Please enter a valid option")
+                if option == "1": #Product List
+                    Clear()
+                    PrintList(products)
+                    Return()
+                elif option == "2": #Add a Product
+                    Clear()
+                    NewProduct()
+                    Return()
+                elif option == "3": #Remove a product
+                    Clear()
+                    RemoveProduct()
+                    Return()
+                elif option == "6": #Return to Main Menu
+                    break    
+                elif option == "exit": #Exit
+                    Goodbye()
+                else:
+                    print("Try again:")
+                    input("Please enter a valid option: ")
+                    Clear()
+                    option = MenuStart(ProductMenu())
+    # -------- Courier Menu ---------
+        elif option == "2": #Courier Menu
+            while True:
                 Clear()
                 option = MenuStart(CourierMenu())
-    elif option == "3": #Order Menu
-#       |------ order menu
-        while True:
-            Clear()
-            option = MenuStart(OrderMenu())
-            if option == "1": #create new order
-                Clear()
-                NewOrder()
-                Return()
-            elif option == "2":
-                Clear()
-                PrintList(orders)
-                Return()
-            elif option == "3":
-                Clear()
-                PrintList(orders)
-                Return()
-            elif option == "6": #Main Menu
-                break
-            elif option == "exit": #Exit
-                Goodbye()
-                exit()
-            else:
-                print("Try again")
-                input("Please enter a valid option")
+                if option == "1": #Courier List
+                    Clear()
+                    PrintList(couriers)
+                    Return()
+                elif option == "6": #Main Menu
+                    break
+                elif option == "exit": #Exit
+                    Goodbye()
+                    exit()
+                else:
+                    print("Try again")
+                    input("Please enter a valid option")
+                    Clear()
+                    option = MenuStart(CourierMenu())
+        elif option == "3": #Order Menu
+    #       |------ order menu
+            while True:
                 Clear()
                 option = MenuStart(OrderMenu())
-#   |----- Main menu --------------
-    elif option == "exit": #Exit
-        Goodbye()
-        exit()
-    else:
-        print("Try again")
-        input("Please enter a valid option")
-        Clear()
-        option = MenuStart(MainMenu())
+                if option == "1": #create new order
+                    Clear()
+                    NewOrder()
+                    Return()
+                elif option == "2":
+                    Clear()
+                    PrintList(orders)
+                    Return()
+                elif option == "3":
+                    Clear()
+                    PrintList(orders)
+                    Return()
+                elif option == "6": #Main Menu
+                    break
+                elif option == "exit": #Exit
+                    Goodbye()
+                    exit()
+                else:
+                    print("Try again")
+                    input("Please enter a valid option")
+                    Clear()
+                    option = MenuStart(OrderMenu())
+    #   |----- Main menu --------------
+        elif option == "exit": #Exit
+            Goodbye()
+            exit()
+        else:
+            print("Try again")
+            input("Please enter a valid option")
+            Clear()
+            option = MenuStart(MainMenu())
