@@ -16,3 +16,4 @@ def ToCSV(filename, list): #file name is the name of the CSV, list is what list 
         dict_writer = csv.DictWriter(output_file, keys)
         dict_writer.writeheader()
         dict_writer.writerows(list)
+        

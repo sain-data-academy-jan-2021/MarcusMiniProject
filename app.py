@@ -1,29 +1,43 @@
 import csv
 import os
 import tabulate
+import pymysql
 from modules.draw_func import DrawTitle
 from modules.utils import *
 from modules.data_persistance import *
+from dotenv import load_dotenv
 
 orders = []
 products = []
 couriers = []
-test_list = [ #if i need to test
-    {"customer_id" : 1,
-     "customer_name" : "Marcus",
-     "status" : "Accepted"
-     },
-    {"customer_id" : 2,
-     "customer_name" : "Steve",
-     "status" : "Accepted"
-     },
-    {"customer_id" : 3,
-     "customer_name" : "John",
-     "status" : "Accepted"
-     }] 
 
+load_dotenv()
+host = os.environ.get("mysql_host")
+user = os.environ.get("mysql_user")
+password = os.environ.get("mysql_pass")
+database = os.environ.get("mysql_db")
+
+connection = pymysql.connect(
+  host,
+  user,
+  password,
+  database
+)
 # ------------ Global Functions ------------
 
+def ReadFromDatabase(table):
+    cursor = connection.cursor()
+    cursor.execute(f"SELECT * FROM {table}")
+    rows = cursor.fetchall()
+    field_names = [i[0] for i in cursor.description]
+    for row in rows:
+        db_dict = {field_names[0]: row[0], field_names[1]: row[1], field_names[2]: row[2], field_names[3]: row[3]}
+        table.append(db_dict)
+    cursor.close()
+    connection.commit()
+    return table
+
+    
 def SortDict(list, key): # sorts a given list, in order of a key, then prints it
     newlist = sorted(list, key=lambda k: k[key])
     if list == orders:
@@ -94,6 +108,7 @@ def Goodbye():
     +|         -_____-         |+
     +|=========================|+
     """)
+    connection.close
     exit()
     
 def MenuStart(Menu):
@@ -110,13 +125,15 @@ def Return():
         Goodbye()
 
 # ------------ Product Functions ------------
-def NewProduct(): #adds a new product to the products list
-    id = Last_Num(products)
-    product_name = input("Please enter the product name: ").lower() 
-    category = input("what category is the product: ").lower() #get list of current categorys from csv
-    price = float(input("Please enter a price: "))
-    newproduct = {"product_id" : id, "product_name" : product_name, "category" : category, "price" : price}
-    products.append(newproduct)
+def NewDBProduct():
+    cursor = connection.cursor()
+    p_product_name = input("Please enter the new products name: ").lower()
+    p_category = input("What category is the new product: ").lower()
+    p_price = input("How much is it: ")
+    cursor.execute(f"INSERT INTO products (product_name, category, price) VALUES ('{p_product_name}', '{p_category}', {p_price})")
+    cursor.close()
+    connection.commit()
+    print ( "Data entered successfully." )
 
 def RemoveProduct(): # removes a product via its product ID
     product2delete = input("Please enter a product id to delete: ")
@@ -158,7 +175,8 @@ def NewOrder():
 if __name__ == "__main__": # only runs if app.py is ran directly
     # --- reads in from the 3 csv files ---
     orders = FromCSV("orders", orders)
-    products = FromCSV("products", products)
+    # products = FromCSV("products", products)
+    products = ReadFromDatabase("products")
     couriers = FromCSV("couriers", couriers)
     while True:
         Clear()
@@ -170,11 +188,12 @@ if __name__ == "__main__": # only runs if app.py is ran directly
                 option = MenuStart(ProductMenu())
                 if option == "1": #Product List
                     Clear()
+                    products = ReadFromDatabase("products") #gets the most up to date version from the database
                     PrintList(products)
                     Return()
                 elif option == "2": #Add a Product
                     Clear()
-                    NewProduct()
+                    NewDBProduct()
                     Return()
                 elif option == "3": #Remove a product
                     Clear()
@@ -236,6 +255,11 @@ if __name__ == "__main__": # only runs if app.py is ran directly
                     Clear()
                     option = MenuStart(OrderMenu())
     #   |----- Main menu --------------
+        elif option == "4": #test
+            print(couriers)
+            # NewDBProduct()#test new function
+            Return()
+            
         elif option == "exit": #Exit
             Goodbye()
             exit()
