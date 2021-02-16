@@ -92,10 +92,12 @@ def NewDBOrder():
     PrintList(couriers, "couriers")
     courier_id = input("Please select the ID of the courier ")
     cursor.execute(f"INSERT INTO orders (customer_name, courier_id, status) VALUES ('{customer_name}', '{courier_id}', 'accepted')")
-    basket = input("enter the IDs: ")
-    basket_list = basket.split(", ")
+    id = cursor.lastrowid
+    PrintList(products, "products")
+    shopping_basket = input("enter the IDs: ")# "1, 3 4"
+    basket_list = shopping_basket.split(", ")# [1, 3,4]
     for i in basket_list:
-        cursor.execute(f"INSERT INTO basket (order_id, product_id) 
+        cursor.execute(f"INSERT INTO basket (order_id, product_id) VALUES ({id}, {i})")
     cursor.close()
     connection.commit()
     print ("Data entered successfully.")
@@ -106,6 +108,8 @@ def NewDBOrder():
 
 products = read_from_database("products")
 couriers = read_from_database("couriers")
+
+NewDBOrder()
 
 
 
