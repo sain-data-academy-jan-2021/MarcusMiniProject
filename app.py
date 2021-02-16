@@ -13,7 +13,8 @@ couriers = []
 
 # ------------ Global Functions ------------
 
-def PrintList(list): #prints whatever list is given
+def PrintList(list, list_string): #prints whatever list is given
+    list = ReadFromDatabase(list_string)
     #changing the tables headers based on which list id given
     if list == orders:
         header = ["Customer ID", "Customer Name", "Order", "Status"]
@@ -91,8 +92,7 @@ def Return():
 
 
 if __name__ == "__main__": # only runs if app.py is ran directly
-    # --- reads in from the 3 csv files ---
-    orders = FromCSV("orders", orders)
+    # --- reads in from the  tables ---
     products = ReadFromDatabase("products")
     couriers = ReadFromDatabase("couriers")
 
@@ -106,23 +106,21 @@ if __name__ == "__main__": # only runs if app.py is ran directly
                 option = MenuStart(ProductMenu())
                 if option == "1": #Product List
                     Clear()
-                    products = ReadFromDatabase("products") #gets the most up to date version
-                    PrintList(products)
+                    PrintList(products,"products")
                     Return()
                 elif option == "2": #Add a Product
                     Clear()
-                    products = ReadFromDatabase("products") #gets the most up to date version
-                    PrintList(products)
+                    PrintList(products, "products")
                     NewDBProduct()
                     Return()
                 elif option == "3": #Remove a product
                     Clear()
-                    PrintList(products)
+                    PrintList(products, "products")
                     DeleteDB("products")
                     Return()
                 elif option == "4": #Remove a product
                     Clear()
-                    PrintList(products)
+                    PrintList(products, "products")
                     UpdateDB("products")
                     Return()    
                     
@@ -142,7 +140,7 @@ if __name__ == "__main__": # only runs if app.py is ran directly
                 option = MenuStart(CourierMenu())
                 if option == "1": #Courier List
                     Clear()
-                    PrintList(couriers)
+                    PrintList(couriers, "couriers")
                     Return()
                 elif option == "6": #Main Menu
                     break
