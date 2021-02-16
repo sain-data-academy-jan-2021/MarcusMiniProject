@@ -85,12 +85,29 @@ def Return():
         Goodbye()
 
 # ------------ Product Functions ------------
-#delete me
+
 # ------------ Courier Functions ------------
 
 # ------------ Order Functions ------------
+def NewDBOrder():
+    # --- creating the first order part
+    cursor = connection.cursor()
+    customer_name = input("Please enter the new customer name ").lower()
+    PrintList(couriers, "couriers")
+    courier_id = input("Please select the ID of the courier ")
+    cursor.execute(f"INSERT INTO orders (customer_name, courier_id, status) VALUES ('{customer_name}', '{courier_id}', 'accepted')")
+    id = cursor.lastrowid #gets the last id entered
+    Clear()
+    PrintList(products, "products")
+    shopping_basket = input("enter the IDs: ")# "1, 3 4"
+    basket_list = shopping_basket.split(", ")# [1, 3,4]
+    for i in basket_list:
+        cursor.execute(f"INSERT INTO basket (order_id, product_id) VALUES ({id}, {i})")
+    cursor.close()
+    connection.commit()
+    print ("Data entered successfully.")
 
-
+# --------------- Main App --------------------
 if __name__ == "__main__": # only runs if app.py is ran directly
     # --- reads in from the  tables ---
     products = ReadFromDatabase("products")
@@ -159,6 +176,7 @@ if __name__ == "__main__": # only runs if app.py is ran directly
                 option = MenuStart(OrderMenu())
                 if option == "1": #create new order
                     Clear()
+                    NewDBOrder()
                     Return()
                 elif option == "2":
                     Clear()

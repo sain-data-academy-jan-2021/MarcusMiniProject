@@ -78,6 +78,8 @@ def FromCSV(filename, list): #file name is the name of the CSV, list is what lis
         return(list)
     except FileNotFoundError as err:
         print(f"Sorry the file '{filename}' could not be found: ", err)
+        
+
 
 def ToCSV(filename, list): #file name is the name of the CSV, list is what list is being written to the csv
     keys = list[0].keys()

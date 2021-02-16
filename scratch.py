@@ -6,6 +6,7 @@ from dotenv import load_dotenv
 products = []
 couriers = []
 
+
 load_dotenv()
 host = os.environ.get("mysql_host")
 user = os.environ.get("mysql_user")
@@ -92,7 +93,7 @@ def NewDBOrder():
     PrintList(couriers, "couriers")
     courier_id = input("Please select the ID of the courier ")
     cursor.execute(f"INSERT INTO orders (customer_name, courier_id, status) VALUES ('{customer_name}', '{courier_id}', 'accepted')")
-    id = cursor.lastrowid
+    id = cursor.lastrowid #gets the last id entered
     PrintList(products, "products")
     shopping_basket = input("enter the IDs: ")# "1, 3 4"
     basket_list = shopping_basket.split(", ")# [1, 3,4]
