@@ -87,7 +87,7 @@ def Return():
 # ------------ Product Functions ------------
 
 # ------------ Courier Functions ------------
-#test
+
 # ------------ Order Functions ------------
 def NewDBOrder():
     # --- creating the first order part
