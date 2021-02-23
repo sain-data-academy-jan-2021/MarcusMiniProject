@@ -18,7 +18,6 @@ def MainMenuChoice():
     while True:
         DrawMainMenu()
         menu_selection = (input("Please select a menu from above: ")).lower()
-        print(f"this is your menu selection {menu_selection}")
         if menu_selection in ["1", "2", "3", "4", "exit"]:
                 break
         else:
