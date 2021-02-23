@@ -20,7 +20,7 @@ def PrintTable(connection, table):
     elif table== "couriers":
         header = ["courier ID", "Courier Name", "Vehicle"]
     rows =  [x.values() for x in list]
-    print(tabulate.tabulate(rows, header, tablefmt='rst'))
+    print(tabulate.tabulate(rows, header, tablefmt='rst', stralign = "center", numalign = "center"))
 
 def PreparePrintTable(connection, table,):
     result = []
