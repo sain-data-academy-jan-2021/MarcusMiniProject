@@ -5,7 +5,6 @@ def GetCourierID(connection):
     current_couriers_id = [id[0] for id in DBSelect(connection, "SELECT courier_id FROM couriers")[0]] # 0 because DBSelect returns 2 values
     PrintTable(connection, "couriers")
     while True:
-        print
         id = input("Please select an courier ID: ")
         if int(id) in current_couriers_id:
             break
