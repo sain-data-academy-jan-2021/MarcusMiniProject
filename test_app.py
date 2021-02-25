@@ -50,7 +50,7 @@ class TestCourier_functions(unittest.TestCase):
     
     @patch("builtins.input")
     def test_NewDBCourier_with_correct_value(self, mock_input):
-    mock_input.side_effect = ["john", "trycycle"]
+        mock_input.side_effect = ["john", "trycycle"]
     
     
         
