@@ -16,5 +16,5 @@ def GetCourierID(connection):
 def NewDBCourier(connection):
     name = input("Please enter the new courier's name: ").lower()
     vehicle = input("What vehicle are they driving: ").lower()
-    DBEdit(connection, f"INSERT INTO products (courier_name, vehicle) VALUES ('{name}', '{vehicle}')")
+    DBEdit(connection, f"INSERT INTO couriers (courier_name, vehicle) VALUES ('{name}', '{vehicle}')")
     print ("Data entered successfully.")
