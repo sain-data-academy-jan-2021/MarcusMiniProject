@@ -2,7 +2,7 @@ import os
 import unittest
 from unittest.mock import patch, Mock
 from modules.menus import MainMenuChoice
-from modules.courier_functions import GetCourierID
+from modules.courier_functions import GetCourierID, NewDBCourier
 
 class TestMenus(unittest.TestCase):
     @patch("modules.menus.DrawMainMenu")
@@ -49,10 +49,13 @@ class TestCourier_functions(unittest.TestCase):
         self.assertEqual(actual, expected)
     
     @patch("builtins.input")
-    def test_NewDBCourier_with_correct_value(self, mock_input):
-        mock_input.side_effect = ["john", "trycycle"]
-    
-    
+    @patch("modules.courier_functions.DBEdit")
+    def test_NewDBCourier_with_correct_value(self, mock_DBEdit, mock_input):
+        mock_input.side_effect = ["john", "tricycle"]
+        connection = None
+        expected = "INSERT INTO couriers (courier_name, vehicle) VALUES ('john', 'tricycle')"
+        NewDBCourier(connection)
+        mock_DBEdit.assert_called_with(connection, expected)
         
 if __name__ == "__main__":
     unittest.main()

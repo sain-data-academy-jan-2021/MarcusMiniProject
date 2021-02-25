@@ -2,10 +2,12 @@ import os
 from modules.draw_func import DrawLine, DrawTitle, PrintTable
 from modules.utils import Clear
 from modules.data_persistance import Connect2DB
-from modules.product_functions import NewDBProduct, DeleteProduct
+from modules.product_functions import NewDBProduct
 from modules.order_functions import NewOrder, DeleteOrder
+from modules.courier_functions import NewDBCourier
+from modules.database_functions import DeleteFromDB
 
-
+# ---------------------------- Product Menu -------------------------- 
 def DrawMainMenu():
     DrawTitle("Buy & Co.")
     print("""+| 1) Product Menu         |+ 
@@ -26,13 +28,15 @@ def MainMenuChoice():
     return menu_selection
 
 def MainMenu():
+    Clear()
     while True:
         choice = MainMenuChoice()
         if choice == "1":
             Clear()
             ProductMenu()
         elif choice == "2":
-            print("Couriers Menu") 
+            Clear()
+            CourierMenu()
         elif choice == "3": # orders menu
             Clear()
             OrderMenu()
@@ -41,9 +45,6 @@ def MainMenu():
         elif choice == "exit":
             Goodbye()
 
-
-
-    
 def Goodbye():
     Clear()
     print("""
@@ -63,7 +64,7 @@ def Return():
         return
     elif exit in ["n", "no"]:
         Goodbye()
-        
+# ---------------------------- Product Menu --------------------------           
 def DrawProductMenu():
     DrawTitle("Order Menu")
     print("""+| 1) Create New Product   |+ 
@@ -95,16 +96,59 @@ def ProductMenu():
             Clear()
             PrintTable(connection, "products")
             Return()
-        elif choice == "3":
+        elif choice == "3": #deletes a product
             Clear()
-            DeleteProduct(connection)
+            DeleteFromDB(connection, "products")
+            Return()
         elif choice == "6":
             Clear()
             MainMenu()
         elif choice == "exit":
             Goodbye()
     connection.close()
+# ---------------------------- Courier Menu --------------------------    
+def DrawCourierMenu():
+    DrawTitle("Order Menu")
+    print("""+| 1) Create New Courier   |+ 
++| 2) Full Couriers List   |+
++| 3) Delete an Courier    |+
++| 6) Main Menu            |+""")
+    DrawTitle("Exit")
     
+def CourierMenuChoice():
+    while True:
+        DrawCourierMenu()
+        menu_selection = (input("Please select a menu from above: ")).lower()
+        if menu_selection in ["1", "2", "3", "6", "exit"]:
+            break
+        else:
+            Clear()
+            print("please select a number between 1 and 3, or exit to quit")
+    return menu_selection
+
+def CourierMenu():
+    connection = Connect2DB()
+    while True:
+        choice = CourierMenuChoice()
+        if choice == "1": #creates a new courier
+            Clear()
+            NewDBCourier(connection)
+            Return()
+        elif choice == "2": # prints couriers table
+            Clear()
+            PrintTable(connection, "couriers")
+            Return()
+        elif choice == "3": #deletes a product
+            Clear()
+            DeleteFromDB(connection, "couriers")
+            Return()
+        elif choice == "6":
+            Clear()
+            MainMenu()
+        elif choice == "exit":
+            Goodbye()
+    connection.close()
+# ---------------------------- Order Menu --------------------------   
 def DrawOrderMenu():
     DrawTitle("Order Menu")
     print("""+| 1) Create New Order     |+ 
@@ -117,7 +161,7 @@ def OrderMenuChoice():
     while True:
         DrawOrderMenu()
         menu_selection = (input("Please select a menu from above: ")).lower()
-        if menu_selection in ["1", "2", "3", "4", "6", "exit"]:
+        if menu_selection in ["1", "2", "3", "6", "exit"]:
             break
         else:
             Clear()
@@ -129,13 +173,17 @@ def OrderMenu():
     while True:
         choice = OrderMenuChoice()
         if choice == "1": #creates a new order
+            Clear()
             NewOrder(connection)
+            Return()
         elif choice == "2": # prints orders table
             Clear()
             PrintTable(connection, "orders")
             Return()
-        elif choice == "3":
-            DeleteOrder(connection) # deletes an order
+        elif choice == "3": # deletes an order
+            Clear()
+            DeleteOrder(connection) 
+            Return()
         elif choice == "6":
             MainMenu()
         elif choice == "exit":
