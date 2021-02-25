@@ -3,7 +3,7 @@ from modules.draw_func import DrawLine, DrawTitle, PrintTable
 from modules.utils import Clear
 from modules.data_persistance import Connect2DB
 from modules.product_functions import NewDBProduct
-from modules.order_functions import NewOrder, DeleteOrder
+from modules.order_functions import NewOrder, DeleteOrder, PrintJoinTable
 from modules.courier_functions import NewDBCourier
 from modules.database_functions import DeleteFromDB
 
@@ -96,11 +96,11 @@ def ProductMenu():
             Clear()
             PrintTable(connection, "products")
             Return()
-        elif choice == "3": #deletes a product
+        elif choice == "3": # deletes a product
             Clear()
             DeleteFromDB(connection, "products")
             Return()
-        elif choice == "6":
+        elif choice == "6": # returns to main menu
             Clear()
             MainMenu()
         elif choice == "exit":
@@ -154,6 +154,7 @@ def DrawOrderMenu():
     print("""+| 1) Create New Order     |+ 
 +| 2) Full Orders List     |+
 +| 3) Delete an order      |+
++| 4) Print Basket Report  |+
 +| 6) Main Menu            |+""")
     DrawTitle("Exit")
     
@@ -161,7 +162,7 @@ def OrderMenuChoice():
     while True:
         DrawOrderMenu()
         menu_selection = (input("Please select a menu from above: ")).lower()
-        if menu_selection in ["1", "2", "3", "6", "exit"]:
+        if menu_selection in ["1", "2", "3", "4", "6", "exit"]:
             break
         else:
             Clear()
@@ -183,6 +184,10 @@ def OrderMenu():
         elif choice == "3": # deletes an order
             Clear()
             DeleteOrder(connection) 
+            Return()
+        elif choice == "4": # deletes an order
+            Clear()
+            PrintJoinTable(connection)
             Return()
         elif choice == "6":
             MainMenu()

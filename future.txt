@@ -3,6 +3,6 @@ Change how my functions are named
 Structure my code in a way to make testing easier (TTD)
 
 Generalize my functions
-Reports eg. how many orders are being picked, select an order number and it prints the products in their basket (JOIN)
+Reports eg. how many orders are being picked
 Status is set as accepted as default, add a menu option to update it
 matplotlib to generate graphs
