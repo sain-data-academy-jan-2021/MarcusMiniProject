@@ -41,7 +41,7 @@ def MainMenu():
             Clear()
             OrderMenu()
         elif choice == "4":
-            print("Testing Menu")
+            print("Testing Menu") #this is for testing single functions
         elif choice == "exit":
             Goodbye()
 
