@@ -14,7 +14,7 @@ def PrintTable(connection, table):
     list = PreparePrintTable(connection, table)
     #changing the tables headers based on which list id given
     if table == "orders":
-        header = ["Customer ID", "Customer Name", "Order", "Status"]
+        header = ["Customer ID", "Customer Name", "Courier ID", "Status"]
     elif table == "products":
         header = ["Product ID", "Product Name", "Category", "Price"]
     elif table== "couriers":
