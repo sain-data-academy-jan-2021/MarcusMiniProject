@@ -106,6 +106,7 @@ def ProductMenu():
         elif choice == "exit":
             Goodbye()
     connection.close()
+
 # ---------------------------- Courier Menu --------------------------    
 def DrawCourierMenu():
     DrawTitle("Order Menu")
