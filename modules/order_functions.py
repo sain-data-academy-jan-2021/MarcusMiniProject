@@ -14,7 +14,7 @@ def NewOrder(connection):
     for i in basket_list:
         DBEdit(connection, f"INSERT INTO basket (order_id, product_id) VALUES ({order_id}, {i})")
 
-def DeleteOrder(connection):
+def DeleteOrder(connection): #deletes an orderfrom the basket first toavoid conflict
     current_order_id = [id[0] for id in DBSelect(connection, "SELECT order_id FROM orders")[0]]
     while True:
         PrintTable(connection, "orders")
